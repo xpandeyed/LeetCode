@@ -11,17 +11,32 @@
  */
 class Solution {
 public:
-    vector<int> res;
-    void filler(TreeNode* root){
-        if(root==NULL){
-            return ;
-        }
-        filler(root->left);
-        filler(root->right);
-        res.push_back(root->val);
-    }
     vector<int> postorderTraversal(TreeNode* root) {
-        filler(root);
+        TreeNode *curr = root;
+        stack<TreeNode*> s;
+        vector<int> res;
+        if(curr==NULL){
+            return res;
+        }
+        do{
+            while(curr){
+                if(curr->right){
+                    s.push(curr->right);
+                }
+                s.push(curr);
+                curr = curr->left;
+            }
+            curr = s.top();
+            s.pop();
+            if(!s.empty() && curr->right==s.top()){
+                s.pop();
+                s.push(curr);
+                curr=curr->right;
+            }else{
+                res.push_back(curr->val);
+                curr=NULL;
+            }
+        }while(!s.empty());
         return res;
     }
 };
