@@ -1,19 +1,19 @@
 class Solution {
 public:
-    int profit(vector<int>& nums, int index, vector<int> &results){
-        if(index<0){
-            return 0;
-        }
-        if(results[index]!=-1){
-            return results[index];
-        }
-        return results[index] = max(profit(nums, index-1, results), nums[index]+profit(nums, index-2, results));
-    }
-    
-    
     int rob(vector<int>& nums) {
-        int n=nums.size();
-        vector<int> results(n, -1);
-        return profit(nums, nums.size()-1, results);
+        int n=nums.size(), i;
+        if(n==1){
+            return nums[0];
+        }
+        if(n==2){
+            return max(nums[0], nums[1]);
+        }
+        vector<int> res(n, -1);
+        res[0]=nums[0];
+        res[1]=max(nums[0], nums[1]);
+        for(i=2;i<n; ++i){
+            res[i]=max(nums[i]+res[i-2], res[i-1]);
+        }
+        return res[n-1];
     }
 };
