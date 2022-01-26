@@ -1,21 +1,21 @@
 class Solution {
 public:
-    int helper(vector<int>& nums1, vector<int>& nums2, int i1, int i2, vector<vector<int>> &res){
-        if(i1==nums1.size() || i2==nums2.size()){
-            return res[i1][i2] = 0;
-        }
-        if(res[i1][i2]!=-1){
-            return res[i1][i2];
-        }
-        if(nums1[i1]==nums2[i2]){
-            return res[i1][i2] =max(1+helper(nums1, nums2, i1+1, i2+1, res), max(helper(nums1, nums2, i1, i2+1, res), helper(nums1, nums2, i1+1, i2, res)));
-        }else{
-            return res[i1][i2] =max(helper(nums1, nums2, i1, i2+1, res), helper(nums1, nums2, i1+1, i2, res));
-        }
-        return res[i1][i2];
-    }
     int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
-        vector<vector<int>> res(nums1.size()+1, vector<int>(nums2.size()+1, -1));
-        return helper(nums1, nums2, 0, 0, res);
+        	int n1 = nums1.size(), n2 = nums2.size(), i, j;
+	vector<vector<int>> res(n1+1, vector<int>(n2+1, -1));
+	for(i=0; i<n1+1; ++i){
+		for(j=0; j<n2+1; ++j){
+			if(i==0 || j==0){
+				res[i][j]=0;
+				continue;
+			}
+			if(nums1[i-1]==nums2[j-1]){
+				res[i][j] = max(1+res[i-1][j-1], max(res[i-1][j], res[i][j]));
+			}else{
+				res[i][j]=max(res[i-1][j], res[i][j-1]);
+			}
+		}
+	}
+	return res[n1][n2];
     }
 };
