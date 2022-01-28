@@ -4,7 +4,7 @@ public:
         int n=days.size(), last, ri, di, a, b, c;
         di=n-1;
         last=days[n-1];
-        vector<int> res(410, 0);
+        vector<int> res(last+30+1, 0);
         for(ri=last; ri>=days[0]; --ri){
             if(ri!=days[di]){
                 res[ri]=res[ri+1];
