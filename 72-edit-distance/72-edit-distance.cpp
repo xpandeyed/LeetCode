@@ -19,9 +19,31 @@ public:
             return res[i1+1][i2+1] = 1+min(replace, min(del, insert));
         }
     }
-    
+    int dynamic(string s1, string s2){
+        int n1=s1.size(), n2 = s2.size(), i, j;
+        vector<vector<int>> res(n1+1, vector<int>(n2+1, 0));
+        for(i=0; i<n1+1; ++i){
+            for(j=0; j<n2+1; ++j){
+                if(j==0){
+                    res[i][j] = i;
+                    continue;
+                }
+                if(i==0){
+                    res[i][j]= j;
+                    continue;
+                }
+                if(s1[i-1]==s2[j-1]){
+                    res[i][j] = res[i-1][j-1];
+                }else{
+                    res[i][j] = min(1+res[i-1][j], min(1+res[i][j-1], 1+res[i-1][j-1]));
+                    
+                }
+            }
+        }
+        return res[n1][n2];
+        
+    }
     int minDistance(string word1, string word2) {
-        vector<vector<int>> res(word1.size()+1, vector<int>(word2.size()+1, -2));
-        return helper(word1, word2, word1.size()-1, word2.size()-1, res);
+        return dynamic(word1, word2);
     }
 };
