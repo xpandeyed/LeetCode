@@ -1,23 +1,22 @@
 class Solution {
 public:
-    int helper(vector<int>& days, vector<int>& costs, int validity, int i,vector<vector<int>> &res){
-        if(i==days.size()){
-            return res[i][validity] = 0;
-        }
-        if(res[i][validity]!=-1){
-            return res[i][validity];
-        }
-        if(validity>=days[i]){
-            return res[i][validity] =helper(days, costs, validity, i+1, res);
-        }
-        int one = costs[0] + helper(days, costs, days[i], i+1, res);
-        int two = costs[1] + helper(days, costs, days[i]+6, i+1, res);
-        int three = costs[2] + helper(days, costs, days[i]+29, i+1, res);
-        return res[i][validity] = min(one, min(two, three));
-        
-    }
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        vector<vector<int>> res(days.size()+1, vector<int>(395, -1));
-        return helper(days, costs, days[0]-1, 0, res);
+        int n=days.size(), last, ri, di, a, b, c;
+        di=n-1;
+        last=days[n-1];
+        vector<int> res(410, 0);
+        for(ri=last; ri>=days[0]; --ri){
+            if(ri!=days[di]){
+                res[ri]=res[ri+1];
+                continue;
+            }
+            a = costs[0] +res[ri+1];
+            b = costs[1] +res[ri+7];
+            c = costs[2] +res[ri+30];
+            res[ri]=min(a, min(b, c));
+            di--;
+        }
+        
+        return res[days[0]];
     }
 };
