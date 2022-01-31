@@ -1,6 +1,36 @@
 class Solution {
 public:
     
+    int oneStack(vector<int>& heights){
+        stack<int> s;
+        int n=heights.size(), i, res=0, curr, tp;
+        
+        for(i=0; i<n; ++i){
+            while(!s.empty() && heights[s.top()]>=heights[i]){
+                tp = s.top();
+                s.pop();
+                curr = heights[i];
+                if(!s.empty()){
+                    curr+=(curr*(i-s.top()-1));
+                }else{
+                    curr+=(curr*i);
+                }
+                
+                res = max(res, curr);
+            }
+        }
+        
+        
+        while(!s.empty()){
+            tp = s.top();
+            s.pop();
+            curr = heights[tp];
+            curr+=(curr*(tp-s.top()-1));
+            res = max(res, curr);
+        }
+        return res;
+    }
+    
     
     int twoArrayOneStack(vector<int>& heights){
         stack<int> s1, s2 ;
