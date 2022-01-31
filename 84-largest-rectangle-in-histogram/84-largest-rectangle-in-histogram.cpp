@@ -3,29 +3,44 @@ public:
     
     int oneStack(vector<int>& heights){
         stack<int> s;
-        int n=heights.size(), i, res=0, curr, tp;
+        int n=heights.size(), i, res=0, curr, tp, r, l;
         
         for(i=0; i<n; ++i){
             while(!s.empty() && heights[s.top()]>=heights[i]){
                 tp = s.top();
                 s.pop();
-                curr = heights[i];
+                curr = heights[tp];
+                r=0;
+                r+=(curr*(i-tp-1));
+                l=0;
                 if(!s.empty()){
-                    curr+=(curr*(i-s.top()-1));
+                    l+=(curr*(tp-s.top()-1));
                 }else{
-                    curr+=(curr*i);
+                    l+=(curr*tp);
                 }
+                curr+=l;
+                curr+=r;
+                
+                                
+                //cout << heights[i] << " " << curr << endl;
+                
                 
                 res = max(res, curr);
             }
+            
+            s.push(i);
         }
         
         
         while(!s.empty()){
             tp = s.top();
             s.pop();
-            curr = heights[tp];
-            curr+=(curr*(tp-s.top()-1));
+            curr = (n-tp)*heights[tp];
+            if(!s.empty()){
+                curr+=(heights[tp]*(tp-s.top()-1));
+            }else{
+                curr+=(heights[tp]*tp);
+            }
             res = max(res, curr);
         }
         return res;
@@ -100,7 +115,7 @@ public:
     
     
     int largestRectangleArea(vector<int>& heights) {
-        return twoArrayOneStack(heights);
+        return oneStack(heights);
     }
     
 };
