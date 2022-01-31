@@ -1,6 +1,8 @@
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& heights) {
+    
+    
+    int twoArrayOneStack(vector<int>& heights){
         stack<int> s1, s2 ;
         int n=heights.size();
         vector<int> v1, v2(n, 0);
@@ -28,7 +30,7 @@ public:
             s2.push(i);
         }
         int res = 0;
-        for(int i=1; i<n-1; ++i){
+        for(int i=0; i<n; ++i){
             int l=v1[i];
             int la =0;
             int r = v2[i];
@@ -46,22 +48,29 @@ public:
             int ta = heights[i]+la+ra;
             res = max(res, ta);
         }
-        int i = 1;
-        int count = heights[0];
-        while(i<n && heights[i]>=heights[0]){
-            count+=heights[0];
-            i++;
-        }
-        res=max(res, count);
-        i=n-2;
-        count=0;
-        count=heights[n-1];
-        while(i>=0 && heights[i]>=heights[n-1]){
-            count+=heights[n-1];
-            --i;
-        }
-        res=max(res, count);
+        // int i = 1;
+        // int count = heights[0];
+        // while(i<n && heights[i]>=heights[0]){
+        //     count+=heights[0];
+        //     i++;
+        // }
+        // res=max(res, count);
+        // i=n-2;
+        // count=0;
+        // count=heights[n-1];
+        // while(i>=0 && heights[i]>=heights[n-1]){
+        //     count+=heights[n-1];
+        //     --i;
+        // }
+        // res=max(res, count);
         return res;
+    }
+    
+    
+    
+    
+    int largestRectangleArea(vector<int>& heights) {
+        return twoArrayOneStack(heights);
     }
     
 };
