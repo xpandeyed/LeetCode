@@ -9,51 +9,45 @@ using namespace std;
 
 class Solution{
 public:
-        
-    int helper(int arr[], int start, int end, vector<vector<int>> &results){
-        
-        if(results[start][end]!=-1){
-            return results[start][end];
+
+int dynamic(int arr[], int n){
+
+    // cout << endl << endl;
+    int  i, j, k, res, left, right, curr;
+    vector<vector<int>> results(n, vector<int>(n, 0));
+
+    //i represents end (cols)
+    for(i=2; i<n; ++i){
+        // cout << "i : " << i << endl;
+
+        //j represents start (rows)
+        for(j=i-2; j>=0; --j){
+            // cout << "    j : " << j << endl;
+            if(i-j==2){
+                results[j][i] = arr[i]*arr[j]*arr[j+1];
+                continue;
+            }
+            res = INT_MAX;
+            for(k=j+1; k<i; ++k){
+
+                // cout << "        k : " << k << endl;
+                left = results[j][k];
+                right = results[k][i];
+
+                curr = left + right + arr[k]*arr[i]*arr[j];
+                res=min(res, curr);
+            }
+            results[j][i]=res;
         }
-        
-        //only one matrix
-        if(end-start==1){
-            return results[start][end] = 0;
-        }
-        
-        
-        //only two matrices
-        if(end-start==2){
-            return results[start][end] = arr[start]*arr[start+1]*arr[start+2];
-        }
-        
-        //more than two matrices
-        long long int res = INT_MAX, res1, res2, temp;
-        for(int i=start+1; i<end; ++i){
-            //partition one from start to i
-            res1 = helper(arr, start, i, results);
-            //partition two from i to end
-            res2 = helper(arr, i, end, results);
-            
-            
-            temp = (arr[start]*arr[end]*arr[i]) + res1 + res2;
-            
-            res = min(res, temp);
-            
-            
-        }
-        
-        return results[start][end] = res;
-        
+
+        // cout << endl << endl;
     }
-
-
-
+    return results[0][n-1];
+}
     int matrixMultiplication(int N, int arr[])
     {
-        vector<vector<int>> results(N, vector<int>(N, -1));
-        
-        return helper(arr, 0, N-1, results);
+        // code here
+        return dynamic(arr, N);
     }
 };
 
