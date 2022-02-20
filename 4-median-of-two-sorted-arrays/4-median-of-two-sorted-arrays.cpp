@@ -7,13 +7,13 @@ public:
             swap(n1, n2);
         }
         
-        if(n1==0){
-            if(n2%2==0){
-                return (double)(nums2[n2/2]+nums2[n2/2-1])/2;
-            }else{
-                return (double)(nums2[n2/2]);
-            }
-        }
+        // if(n1==0){
+        //     if(n2%2==0){
+        //         return (double)(nums2[n2/2]+nums2[n2/2-1])/2;
+        //     }else{
+        //         return (double)(nums2[n2/2]);
+        //     }
+        // }
         
         int l=0, h=n1, m1, m2, n1L, n1R, n2L, n2R;
         while(l<=h){
