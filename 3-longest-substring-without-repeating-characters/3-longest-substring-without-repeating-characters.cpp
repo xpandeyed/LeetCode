@@ -22,10 +22,6 @@ public:
             }
             curr = i-start+1;
             res = max(curr, res);
-            
-            
-            
-            
         }
         
         return res;
