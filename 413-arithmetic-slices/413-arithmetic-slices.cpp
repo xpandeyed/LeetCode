@@ -27,6 +27,5 @@ public:
         
         return res;
         
-        
     }
 };
